@@ -1,21 +1,15 @@
 import { Fragment } from 'react';
 import {
   AiFillGithub,
-  AiFillInstagram,
-  AiFillMediumSquare,
 } from 'react-icons/ai';
-import { CgDribbble } from 'react-icons/cg';
 import { PiMatrixLogoFill } from 'react-icons/pi';
 import {
-  FaBehanceSquare,
   FaBuilding,
   FaDev,
-  FaFacebook,
   FaGlobe,
   FaLinkedin,
   FaMastodon,
   FaReddit,
-  FaSkype,
   FaStackOverflow,
   FaTelegram,
   FaYoutube,
