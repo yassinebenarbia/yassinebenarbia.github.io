@@ -151,4 +151,5 @@ export interface SanitizedConfig {
   blog: SanitizedBlog;
   themeConfig: SanitizedThemeConfig;
   footer?: string;
+  enablePWA?: boolean;
 }
