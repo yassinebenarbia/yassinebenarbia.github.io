@@ -23,7 +23,7 @@ import {
 import { FaSquareThreads } from 'react-icons/fa6';
 import { MdLocationOn } from 'react-icons/md';
 import { RiMailFill, RiPhoneFill } from 'react-icons/ri';
-import { SiResearchgate, SiTwitter, SiUdemy } from 'react-icons/si';
+import { SiResearchgate, SiUdemy, SiX } from 'react-icons/si';
 import { Profile } from '../../interfaces/profile';
 import {
   SanitizedGithub,
@@ -219,12 +219,12 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
                 link={`https://matrix.to/#/${social.matrix}`}
                 />
               )}
-              {social?.twitter && (
+              {social?.x && (
                 <ListItem
-                  icon={<SiTwitter />}
-                  title="Twitter:"
-                  value={social.twitter}
-                  link={`https://twitter.com/${social.twitter}`}
+                  icon={<SiX/>}
+                  title="X:"
+                  value={social.x}
+                  link={`https://x.com/${social.x}`}
                 />
               )}
               {social?.mastodon && (
