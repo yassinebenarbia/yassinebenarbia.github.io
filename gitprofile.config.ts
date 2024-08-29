@@ -111,16 +111,14 @@ const CONFIG = {
   ],
   educations: [
     {
-      institution: 'Institution Name',
-      degree: 'Degree',
-      from: '2015',
-      to: '2019',
+      institution: 'High School Othman Chatti - Sousse (LOC)',
+      degree: 'CS Degree',
+      year: '2021',
     },
     {
-      institution: 'Institution Name',
-      degree: 'Degree',
-      from: '2012',
-      to: '2014',
+      institution: 'Higher Institute of Informatics and Communication Technologies (ISITCom)',
+      degree: 'Bachelor Degree in Computre Science, Specialized in Embedded Systems and IoT',
+      year: '2024',
     },
   ],
   publications: [],

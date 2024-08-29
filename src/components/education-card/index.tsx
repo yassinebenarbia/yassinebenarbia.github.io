@@ -73,7 +73,7 @@ const EducationCard = ({
                 {educations.map((item, index) => (
                   <ListItem
                     key={index}
-                    time={`${item.from} - ${item.to}`}
+                    time={`${item.year}`}
                     degree={item.degree}
                     institution={item.institution}
                   />
