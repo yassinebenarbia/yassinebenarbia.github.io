@@ -25,7 +25,7 @@ const CONFIG = {
       },
       manual: {
         // Properties for manually specifying projects
-        projects: ['yassinebenarbia/mmp', 'yassinebenarbia/tomodoro'], // List of repository names to display. example: ['arifszn/my-project1', 'arifszn/my-project2']
+        projects: ['yassinebenarbia/mmp', 'yassinebenarbia/tomodoro', 'yassinebenarbia/Project'], // List of repository names to display. example: ['arifszn/my-project1', 'arifszn/my-project2']
       },
     },
     external: {
@@ -49,6 +49,12 @@ const CONFIG = {
           description: 'User oriented Neovim destribution',
           // imageUrl: ''
           link: 'https://github.com/yassinebenarbia/MyNvim',
+        },
+        {
+          title: 'Graduation Project',
+          description: 'Graduation Project, an exposed MQTT API that leverage the power of AI for posture analysis of atheltic movements',
+          // imageUrl: ''
+          link: 'https://github.com/yassinebenarbia/Project',
         },
       ],
     },
@@ -87,38 +93,31 @@ const CONFIG = {
   ],
   experiences: [
     {
-      company: 'Company Name',
-      position: 'Position',
-      from: 'September 2021',
-      to: 'Present',
-      companyLink: 'https://example.com',
+      company: 'IOBIRD',
+      position: 'Intern',
+      from: 'July 2022',
+      to: 'September 2022',
+      companyLink: 'https://iobird.web.app/',
     },
     {
-      company: 'Company Name',
-      position: 'Position',
-      from: 'July 2019',
-      to: 'August 2021',
-      companyLink: 'https://example.com',
+      company: 'ISITCom',
+      position: 'Intern',
+      from: 'July 2023',
+      to: 'September 2024',
+      companyLink: 'https://isitcom.rnu.tn/',
     },
   ],
-  certifications: [
-    {
-      name: 'Lorem ipsum',
-      body: 'Lorem ipsum dolor sit amet',
-      year: 'March 2022',
-      link: 'https://example.com',
-    },
-  ],
+  certifications: [],
   educations: [
     {
-      institution: 'High School Othman Chatti - Sousse (LOC)',
-      degree: 'CS Degree',
-      year: '2021',
+      institution: 'Higher Institute of Informatics and Communication Technologies (ISITCom)',
+      degree: 'Bachelor Degree in Computre Engeneering, Specialized in Embedded Systems and IoT',
+      year: '2024',
     },
     {
-      institution: 'Higher Institute of Informatics and Communication Technologies (ISITCom)',
-      degree: 'Bachelor Degree in Computre Science, Specialized in Embedded Systems and IoT',
-      year: '2024',
+      institution: 'High School Othman Chatti - Sousse - Msaken (LOC)',
+      degree: 'CS Degree',
+      year: '2021',
     },
   ],
   publications: [],
@@ -195,7 +194,7 @@ const CONFIG = {
   },
 
   // Optional Footer. Supports plain text or HTML.
-  footer: `Made With Love`,
+  footer: `Made With <b>Love</b> and <b>Passion</b>`,
 
   enablePWA: true,
 };
