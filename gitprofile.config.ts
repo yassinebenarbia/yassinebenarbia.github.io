@@ -102,7 +102,7 @@ const CONFIG = {
     {
       company: 'ISITCom',
       position: 'Intern',
-      from: 'July 2023',
+      from: 'July 2024',
       to: 'September 2024',
       companyLink: 'https://isitcom.rnu.tn/',
     },
