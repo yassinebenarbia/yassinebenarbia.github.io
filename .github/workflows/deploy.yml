@@ -52,7 +52,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: https://yassineba.info
+      url: https://cv.yassineba.info
       # url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
