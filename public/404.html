@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Page Not Found</title>
+  <script type="text/javascript">
+    // Single Page Apps for GitHub Pages
+    // MIT License
+    // https://github.com/rafgraph/spa-github-pages
+    // This script takes the current URL and converts the path and query
+    // string into just the hash fragment, and then redirects the browser
+    // to the new URL with the hash fragment and without the path or query string.
+    // This allows GitHub Pages to serve the index.html page, and then the
+    // SPA's client-side router can take over and handle the routing.
+    var path = window.location.pathname;
+    var query = window.location.search;
+    var fragment = window.location.hash;
+    if (path !== '/') {
+      window.location.replace(window.location.origin + '/#' + path + query + fragment);
+    }
+  </script>
+</head>
+<body>
+</body>
+</html>

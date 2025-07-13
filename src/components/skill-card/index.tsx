@@ -1,4 +1,4 @@
-import { skeleton } from '../../utils';
+import { skeleton } from "../../utils";
 
 const SkillCard = ({
   loading,
@@ -12,7 +12,7 @@ const SkillCard = ({
     for (let index = 0; index < 12; index++) {
       array.push(
         <div key={index}>
-          {skeleton({ widthCls: 'w-16', heightCls: 'h-4', className: 'm-1' })}
+          {skeleton({ widthCls: "w-16", heightCls: "h-4", className: "m-1" })}
         </div>,
       );
     }
@@ -26,7 +26,7 @@ const SkillCard = ({
         <div className="mx-3">
           <h5 className="card-title">
             {loading ? (
-              skeleton({ widthCls: 'w-32', heightCls: 'h-8' })
+              skeleton({ widthCls: "w-32", heightCls: "h-8" })
             ) : (
               <span className="text-base-content opacity-70">Tech Stack</span>
             )}

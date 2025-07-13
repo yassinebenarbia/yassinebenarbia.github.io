@@ -1,4 +1,4 @@
-import { skeleton } from '../../utils';
+import { skeleton } from "../../utils";
 
 const Footer = ({
   content,
@@ -12,7 +12,7 @@ const Footer = ({
   return (
     <div className="card-body">
       {loading ? (
-        skeleton({ widthCls: 'w-52', heightCls: 'h-6' })
+        skeleton({ widthCls: "w-52", heightCls: "h-6" })
       ) : (
         <div dangerouslySetInnerHTML={{ __html: content }} />
       )}

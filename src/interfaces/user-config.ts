@@ -1,3 +1,5 @@
+import Tag from "./tags";
+
 interface Github {
   /**
    * GitHub org/user name
@@ -269,25 +271,6 @@ interface Hotjar {
   snippetVersion?: number;
 }
 
-interface Blog {
-  /**
-   * medium | dev
-   */
-  source?: string;
-
-  /**
-   * Username
-   */
-  username?: string;
-
-  /**
-   * How many articles to display
-   *
-   * Max is 10
-   */
-  limit?: number;
-}
-
 interface CustomTheme {
   /**
    * Primary color
@@ -312,17 +295,17 @@ interface CustomTheme {
   /**
    * Base color of page
    */
-  'base-100'?: string;
+  "base-100"?: string;
 
   /**
    * Border radius of rounded-box
    */
-  '--rounded-box'?: string;
+  "--rounded-box"?: string;
 
   /**
    * Border radius of rounded-btn
    */
-  '--rounded-btn'?: string;
+  "--rounded-btn"?: string;
 }
 
 interface ThemeConfig {
@@ -357,7 +340,63 @@ interface ThemeConfig {
   customTheme?: CustomTheme;
 }
 
-interface Config {
+export interface BlogArticle {
+  /**
+   * Blog title
+   */
+  title: string;
+
+  /**
+   * Path to .mdx blog file
+   */
+  path: string;
+
+  /**
+   * Blog tags
+   */
+  tags?: Array<Tag>;
+
+  /**
+   * Tile to read in seconds
+   */
+  ttr?: number;
+
+  /**
+   * Blog release date
+   */
+  date?: Date;
+
+  /**
+   * Blog Description
+   */
+  desc?: string;
+}
+
+interface BlogConfig {
+  /**
+   * medium | dev
+   */
+  source?: string;
+
+  /**
+   * Username
+   */
+  username?: string;
+
+  /**
+   * How many articles to display
+   *
+   * Max is 10
+   */
+  limit?: number;
+
+  /**
+   * Display blog section?
+   */
+  display?: boolean;
+}
+
+export interface UserConfig {
   /**
    * GitHub config
    */
@@ -426,7 +465,12 @@ interface Config {
   /**
    * Blog config
    */
-  blog?: Blog;
+  blog?: BlogConfig;
+
+  /**
+   * Blog articles
+   */
+  blogs?: { [key: string]: BlogArticle };
 
   /**
    * Theme config
@@ -443,5 +487,3 @@ interface Config {
    */
   enablePWA?: boolean;
 }
-
-declare const CONFIG: Config;

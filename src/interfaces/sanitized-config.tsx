@@ -1,3 +1,5 @@
+import Tag from "@/interfaces/tags";
+
 export interface SanitizedGithub {
   username: string;
 }
@@ -109,11 +111,20 @@ export interface SanitizedHotjar {
   snippetVersion: number;
 }
 
-export interface SanitizedBlog {
-  display: boolean;
-  source: string;
-  username: string;
+export interface SanitizedBlogArticle {
+  title: string;
+  path: string;
+  tags?: Array<Tag>;
+  ttr?: number;
+  date?: Date;
+  desc?: string;
+}
+
+export interface SanitizedBlogConfig {
+  source?: string;
+  username?: string;
   limit: number;
+  display: boolean;
 }
 
 export interface SanitizedCustomTheme {
@@ -121,9 +132,9 @@ export interface SanitizedCustomTheme {
   secondary: string;
   accent: string;
   neutral: string;
-  'base-100': string;
-  '--rounded-box': string;
-  '--rounded-btn': string;
+  "base-100": string;
+  "--rounded-box": string;
+  "--rounded-btn": string;
 }
 
 export interface SanitizedThemeConfig {
@@ -148,7 +159,7 @@ export interface SanitizedConfig {
   publications: Array<SanitizedPublication>;
   googleAnalytics: SanitizedGoogleAnalytics;
   hotjar: SanitizedHotjar;
-  blog: SanitizedBlog;
+  blog: SanitizedBlogConfig;
   themeConfig: SanitizedThemeConfig;
   footer?: string;
   enablePWA?: boolean;

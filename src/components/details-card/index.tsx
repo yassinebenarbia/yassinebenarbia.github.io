@@ -1,8 +1,6 @@
-import { Fragment } from 'react';
-import {
-  AiFillGithub,
-} from 'react-icons/ai';
-import { PiMatrixLogoFill } from 'react-icons/pi';
+import { Fragment } from "react";
+import { AiFillGithub } from "react-icons/ai";
+import { PiMatrixLogoFill } from "react-icons/pi";
 import {
   FaBuilding,
   FaDev,
@@ -13,17 +11,18 @@ import {
   FaStackOverflow,
   FaTelegram,
   FaYoutube,
-} from 'react-icons/fa';
-import { FaSquareThreads } from 'react-icons/fa6';
-import { MdLocationOn } from 'react-icons/md';
-import { RiMailFill, RiPhoneFill } from 'react-icons/ri';
-import { SiResearchgate, SiUdemy, SiX } from 'react-icons/si';
-import { Profile } from '../../interfaces/profile';
+} from "react-icons/fa";
+import { FaSquareThreads } from "react-icons/fa6";
+import { MdLocationOn } from "react-icons/md";
+import { RiMailFill, RiPhoneFill } from "react-icons/ri";
+import { SiResearchgate, SiUdemy, SiX } from "react-icons/si";
+import { Profile } from "../../interfaces/profile";
 import {
   SanitizedGithub,
   SanitizedSocial,
-} from '../../interfaces/sanitized-config';
-import { skeleton } from '../../utils';
+} from "../../interfaces/sanitized-config";
+import { skeleton } from "../../utils";
+import BlogsBotton from "../blogs-botton";
 
 type Props = {
   profile: Profile | null;
@@ -33,7 +32,7 @@ type Props = {
 };
 
 const isCompanyMention = (company: string): boolean => {
-  return company.startsWith('@') && !company.includes(' ');
+  return company.startsWith("@") && !company.includes(" ");
 };
 
 const companyLink = (company: string): string => {
@@ -44,7 +43,7 @@ const getFormattedMastodonValue = (
   mastodonValue: string,
   isLink: boolean,
 ): string => {
-  const [username, server] = mastodonValue.split('@');
+  const [username, server] = mastodonValue.split("@");
 
   if (isLink) {
     return `https://${server}/@${username}`;
@@ -67,10 +66,10 @@ const ListItem: React.FC<{
       </div>
       <div
         className={`${
-          skeleton ? 'flex-grow' : ''
-        } text-sm font-normal text-right mr-2 ml-3 ${link ? 'truncate' : ''}`}
+          skeleton ? "flex-grow" : ""
+        } text-sm font-normal text-right mr-2 ml-3 ${link ? "truncate" : ""}`}
         style={{
-          wordBreak: 'break-word',
+          wordBreak: "break-word",
         }}
       >
         <a
@@ -94,8 +93,8 @@ const OrganizationItem: React.FC<{
   skeleton?: boolean;
 }> = ({ icon, title, value, link, skeleton = false }) => {
   const renderValue = () => {
-    if (typeof value === 'string') {
-      return value.split(' ').map((company) => {
+    if (typeof value === "string") {
+      return value.split(" ").map((company) => {
         company = company.trim();
         if (!company) return null;
 
@@ -125,10 +124,10 @@ const OrganizationItem: React.FC<{
       </div>
       <div
         className={`${
-          skeleton ? 'flex-grow' : ''
-        } text-sm font-normal text-right mr-2 ml-3 space-x-2 ${link ? 'truncate' : ''}`}
+          skeleton ? "flex-grow" : ""
+        } text-sm font-normal text-right mr-2 ml-3 space-x-2 ${link ? "truncate" : ""}`}
         style={{
-          wordBreak: 'break-word',
+          wordBreak: "break-word",
         }}
       >
         {renderValue()}
@@ -154,9 +153,9 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
         <ListItem
           key={index}
           skeleton={true}
-          icon={skeleton({ widthCls: 'w-4', heightCls: 'h-4' })}
-          title={skeleton({ widthCls: 'w-24', heightCls: 'h-4' })}
-          value={skeleton({ widthCls: 'w-full', heightCls: 'h-4' })}
+          icon={skeleton({ widthCls: "w-4", heightCls: "h-4" })}
+          title={skeleton({ widthCls: "w-24", heightCls: "h-4" })}
+          value={skeleton({ widthCls: "w-full", heightCls: "h-4" })}
         />,
       );
     }
@@ -172,157 +171,168 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
             renderSkeleton()
           ) : (
             <Fragment>
-              {profile.location && (
-                <ListItem
-                  icon={<MdLocationOn />}
-                  title="Based in:"
-                  value={profile.location}
+              {
+                <Fragment>
+                  {profile.location && (
+                    <ListItem
+                      icon={<MdLocationOn />}
+                      title="Based in:"
+                      value={profile.location}
+                    />
+                  )}
+                  {profile.company && (
+                    <OrganizationItem
+                      icon={<FaBuilding />}
+                      title="Organization:"
+                      value={profile.company}
+                      link={
+                        isCompanyMention(profile.company.trim())
+                          ? companyLink(profile.company.trim())
+                          : undefined
+                      }
+                    />
+                  )}
+                  <ListItem
+                    icon={<AiFillGithub />}
+                    title="GitHub:"
+                    value={github.username}
+                    link={`https://github.com/${github.username}`}
+                  />
+                  {social?.researchGate && (
+                    <ListItem
+                      icon={<SiResearchgate />}
+                      title="ResearchGate:"
+                      value={social.researchGate}
+                      link={`https://www.researchgate.net/profile/${social.researchGate}`}
+                    />
+                  )}
+                  {social?.matrix && (
+                    <ListItem
+                      icon={<PiMatrixLogoFill />}
+                      title="Matrix"
+                      value={social.matrix}
+                      link={`https://matrix.to/#/${social.matrix}`}
+                    />
+                  )}
+                  {social?.x && (
+                    <ListItem
+                      icon={<SiX />}
+                      title="X:"
+                      value={social.x}
+                      link={`https://x.com/${social.x}`}
+                    />
+                  )}
+                  {social?.mastodon && (
+                    <ListItem
+                      icon={<FaMastodon />}
+                      title="Mastodon:"
+                      value={getFormattedMastodonValue(social.mastodon, false)}
+                      link={getFormattedMastodonValue(social.mastodon, true)}
+                    />
+                  )}
+                  {social?.linkedin && (
+                    <ListItem
+                      icon={<FaLinkedin />}
+                      title="LinkedIn:"
+                      value={social.linkedin}
+                      link={`https://www.linkedin.com/in/${social.linkedin}`}
+                    />
+                  )}
+                  {social?.reddit && (
+                    <ListItem
+                      icon={<FaReddit />}
+                      title="Reddit:"
+                      value={social.reddit}
+                      link={`https://www.reddit.com/user/${social.reddit}`}
+                    />
+                  )}
+                  {social?.threads && (
+                    <ListItem
+                      icon={<FaSquareThreads />}
+                      title="Threads:"
+                      value={social.threads}
+                      link={`https://www.threads.net/@${social.threads.replace("@", "")}`}
+                    />
+                  )}
+                  {social?.youtube && (
+                    <ListItem
+                      icon={<FaYoutube />}
+                      title="YouTube:"
+                      value={`@${social.youtube}`}
+                      link={`https://www.youtube.com/@${social.youtube}`}
+                    />
+                  )}
+                  {social?.udemy && (
+                    <ListItem
+                      icon={<SiUdemy />}
+                      title="Udemy:"
+                      value={social.udemy}
+                      link={`https://www.udemy.com/user/${social.udemy}`}
+                    />
+                  )}
+                  {social?.dev && (
+                    <ListItem
+                      icon={<FaDev />}
+                      title="Dev:"
+                      value={social.dev}
+                      link={`https://dev.to/${social.dev}`}
+                    />
+                  )}
+                  {social?.stackoverflow && (
+                    <ListItem
+                      icon={<FaStackOverflow />}
+                      title="Stack Overflow:"
+                      value={social.stackoverflow.split("/").slice(-1)}
+                      link={`https://stackoverflow.com/users/${social.stackoverflow}`}
+                    />
+                  )}
+                  {social?.website && (
+                    <ListItem
+                      icon={<FaGlobe />}
+                      title="Website:"
+                      value={social.website
+                        .replace("https://", "")
+                        .replace("http://", "")}
+                      link={
+                        !social.website.startsWith("http")
+                          ? `http://${social.website}`
+                          : social.website
+                      }
+                    />
+                  )}
+                  {social?.telegram && (
+                    <ListItem
+                      icon={<FaTelegram />}
+                      title="Telegram"
+                      value={social.telegram}
+                      link={`https://t.me/${social.telegram}`}
+                    />
+                  )}
+                  {social?.phone && (
+                    <ListItem
+                      icon={<RiPhoneFill />}
+                      title="Phone:"
+                      value={social.phone}
+                      link={`tel:${social.phone}`}
+                    />
+                  )}
+                  {social?.email && (
+                    <ListItem
+                      icon={<RiMailFill />}
+                      title="Email:"
+                      value={social.email}
+                      link={`mailto:${social.email}`}
+                    />
+                  )}
+                </Fragment>
+              }
+              {
+                <BlogsBotton
+                  externalProjects={[]}
+                  header={"My Blogs!"}
+                  loading={false}
                 />
-              )}
-              {profile.company && (
-                <OrganizationItem
-                  icon={<FaBuilding />}
-                  title="Organization:"
-                  value={profile.company}
-                  link={
-                    isCompanyMention(profile.company.trim())
-                      ? companyLink(profile.company.trim())
-                      : undefined
-                  }
-                />
-              )}
-              <ListItem
-                icon={<AiFillGithub />}
-                title="GitHub:"
-                value={github.username}
-                link={`https://github.com/${github.username}`}
-              />
-              {social?.researchGate && (
-                <ListItem
-                  icon={<SiResearchgate />}
-                  title="ResearchGate:"
-                  value={social.researchGate}
-                  link={`https://www.researchgate.net/profile/${social.researchGate}`}
-                />
-              )}
-              {social?.matrix && (
-                <ListItem
-                icon={<PiMatrixLogoFill />}
-                title="Matrix"
-                value={social.matrix}
-                link={`https://matrix.to/#/${social.matrix}`}
-                />
-              )}
-              {social?.x && (
-                <ListItem
-                  icon={<SiX/>}
-                  title="X:"
-                  value={social.x}
-                  link={`https://x.com/${social.x}`}
-                />
-              )}
-              {social?.mastodon && (
-                <ListItem
-                  icon={<FaMastodon />}
-                  title="Mastodon:"
-                  value={getFormattedMastodonValue(social.mastodon, false)}
-                  link={getFormattedMastodonValue(social.mastodon, true)}
-                />
-              )}
-              {social?.linkedin && (
-                <ListItem
-                  icon={<FaLinkedin />}
-                  title="LinkedIn:"
-                  value={social.linkedin}
-                  link={`https://www.linkedin.com/in/${social.linkedin}`}
-                />
-              )}
-              {social?.reddit && (
-                <ListItem
-                  icon={<FaReddit />}
-                  title="Reddit:"
-                  value={social.reddit}
-                  link={`https://www.reddit.com/user/${social.reddit}`}
-                />
-              )}
-              {social?.threads && (
-                <ListItem
-                  icon={<FaSquareThreads />}
-                  title="Threads:"
-                  value={social.threads}
-                  link={`https://www.threads.net/@${social.threads.replace('@', '')}`}
-                />
-              )}
-              {social?.youtube && (
-                <ListItem
-                  icon={<FaYoutube />}
-                  title="YouTube:"
-                  value={`@${social.youtube}`}
-                  link={`https://www.youtube.com/@${social.youtube}`}
-                />
-              )}
-              {social?.udemy && (
-                <ListItem
-                  icon={<SiUdemy />}
-                  title="Udemy:"
-                  value={social.udemy}
-                  link={`https://www.udemy.com/user/${social.udemy}`}
-                />
-              )}
-              {social?.dev && (
-                <ListItem
-                  icon={<FaDev />}
-                  title="Dev:"
-                  value={social.dev}
-                  link={`https://dev.to/${social.dev}`}
-                />
-              )}
-              {social?.stackoverflow && (
-                <ListItem
-                  icon={<FaStackOverflow />}
-                  title="Stack Overflow:"
-                  value={social.stackoverflow.split('/').slice(-1)}
-                  link={`https://stackoverflow.com/users/${social.stackoverflow}`}
-                />
-              )}
-              {social?.website && (
-                <ListItem
-                  icon={<FaGlobe />}
-                  title="Website:"
-                  value={social.website
-                    .replace('https://', '')
-                    .replace('http://', '')}
-                  link={
-                    !social.website.startsWith('http')
-                      ? `http://${social.website}`
-                      : social.website
-                  }
-                />
-              )}
-              {social?.telegram && (
-                <ListItem
-                  icon={<FaTelegram />}
-                  title="Telegram"
-                  value={social.telegram}
-                  link={`https://t.me/${social.telegram}`}
-                />
-              )}
-              {social?.phone && (
-                <ListItem
-                  icon={<RiPhoneFill />}
-                  title="Phone:"
-                  value={social.phone}
-                  link={`tel:${social.phone}`}
-                />
-              )}
-              {social?.email && (
-                <ListItem
-                  icon={<RiMailFill />}
-                  title="Email:"
-                  value={social.email}
-                  link={`mailto:${social.email}`}
-                />
-              )}
+              }
             </Fragment>
           )}
         </div>

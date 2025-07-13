@@ -1,7 +1,7 @@
-import { Fragment } from 'react';
-import LazyImage from '../lazy-image';
-import { ga, skeleton } from '../../utils';
-import { SanitizedExternalProject } from '../../interfaces/sanitized-config';
+import { Fragment } from "react";
+import LazyImage from "../lazy-image";
+import { ga, skeleton } from "../../utils";
+import { SanitizedExternalProject } from "../../interfaces/sanitized-config";
 
 const ExternalProjectCard = ({
   externalProjects,
@@ -26,32 +26,32 @@ const ExternalProjectCard = ({
                   <div className="w-full">
                     <h2>
                       {skeleton({
-                        widthCls: 'w-32',
-                        heightCls: 'h-8',
-                        className: 'mb-2 mx-auto',
+                        widthCls: "w-32",
+                        heightCls: "h-8",
+                        className: "mb-2 mx-auto",
                       })}
                     </h2>
                     <div className="avatar w-full h-full">
                       <div className="w-24 h-24 mask mask-squircle mx-auto">
                         {skeleton({
-                          widthCls: 'w-full',
-                          heightCls: 'h-full',
-                          shape: '',
+                          widthCls: "w-full",
+                          heightCls: "h-full",
+                          shape: "",
                         })}
                       </div>
                     </div>
                     <div className="mt-2">
                       {skeleton({
-                        widthCls: 'w-full',
-                        heightCls: 'h-4',
-                        className: 'mx-auto',
+                        widthCls: "w-full",
+                        heightCls: "h-4",
+                        className: "mx-auto",
                       })}
                     </div>
                     <div className="mt-2 flex items-center flex-wrap justify-center">
                       {skeleton({
-                        widthCls: 'w-full',
-                        heightCls: 'h-4',
-                        className: 'mx-auto',
+                        widthCls: "w-full",
+                        heightCls: "h-4",
+                        className: "mx-auto",
                       })}
                     </div>
                   </div>
@@ -77,7 +77,7 @@ const ExternalProjectCard = ({
 
           try {
             if (googleAnalyticId) {
-              ga.event('Click External Project', {
+              ga.event("Click External Project", {
                 post: item.title,
               });
             }
@@ -85,7 +85,7 @@ const ExternalProjectCard = ({
             console.error(error);
           }
 
-          window?.open(item.link, '_blank');
+          window?.open(item.link, "_blank");
         }}
       >
         <div className="p-8 h-full w-full">
@@ -93,7 +93,7 @@ const ExternalProjectCard = ({
             <div className="w-full">
               <div className="px-4">
                 <div className="text-center w-full">
-                  <h2 className="font-medium text-center opacity-60 mb-2">
+                  <h2 className="font-medium text-center opacity-60 mb-2 tracking-wide text-base-content text-lg">
                     {item.title}
                   </h2>
                   {item.imageUrl && (
@@ -101,11 +101,11 @@ const ExternalProjectCard = ({
                       <div className="w-24 h-24 mask mask-squircle">
                         <LazyImage
                           src={item.imageUrl}
-                          alt={'thumbnail'}
+                          alt={"thumbnail"}
                           placeholder={skeleton({
-                            widthCls: 'w-full',
-                            heightCls: 'h-full',
-                            shape: '',
+                            widthCls: "w-full",
+                            heightCls: "h-full",
+                            shape: "",
                           })}
                         />
                       </div>
@@ -133,7 +133,7 @@ const ExternalProjectCard = ({
                 <div className="mx-3 flex items-center justify-between mb-2">
                   <h5 className="card-title">
                     {loading ? (
-                      skeleton({ widthCls: 'w-40', heightCls: 'h-8' })
+                      skeleton({ widthCls: "w-40", heightCls: "h-8" })
                     ) : (
                       <span className="text-base-content opacity-70">
                         {header}
