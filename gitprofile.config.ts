@@ -204,6 +204,35 @@ const config: UserConfig = {
   },
 
   enablePWA: true,
+  books: [
+    // title field is optional
+    { "ISBN": "9780374533557", "status": "read", "title": "Thinking, Fast and Slow" },
+    { "ISBN": "9780061353239", "status": "read", "title": "Predictably Irrational" },
+    { "ISBN": "9780812993882", "status": "read", "title": "How We Learn The Surprising Truth About ..." },
+    { "ISBN": "9780811204811", "status": "read", "title": "No Longer Human" },
+    { "ISBN": "0198185219", "status": "read", "title": "1984" },
+    { "ISBN": "9781519099846", "status": "read", "title": "Thinking as a Science" },
+    { "ISBN": "9780140441185", "status": "read", "title": "Thus Spoke Zarathustra" },
+    { "ISBN": "9780151072552", "status": "read", "title": "Animal Farm" },
+    { "ISBN": "9781451683400", "status": "read", "title": "Free Will" },
+    { "ISBN": "9781501197277", "status": "read", "title": "The Courage to Be Disliked" },
+    { "ISBN": "9781250118363", "status": "read", "title": "Algorithms to live by" },
+    { "ISBN": "9781982518172", "status": "read", "title": "The Skeptics' Guide to the Universe" },
+    { "ISBN": "9781593278281", "status": "read", "title": "The Rust Programming Language" },
+    { "ISBN": "9783319987392", "status": "read", "title": "Study guide to ISTQB" },
+    { "ISBN": "9781685891244", "status": "read", "title": "Technofeudalism" },
+    { "ISBN": "9788197022272", "status": "read", "title": "How to Take Smart Notes" },
+    { "ISBN": "9781612680019", "status": "read", "title": "Rich Dad Poor Dad" },
+
+    { "ISBN": "9781982150921", "status": "reading", "title": "Tender in the flesh" },
+    { "ISBN": "9780525512196", "status": "reading", "title": "21 Lessons for the 21st Cetury" },
+
+    { "ISBN": "9780804795098", "status": "to-read", "title": "The Burnout Society" },
+    { "ISBN": "9780140447927", "status": "to-read", "title": "The Idiot" },
+    { "ISBN": "9780881032475", "status": "to-read", "title": "The Stranger" },
+    { "ISBN": "9780486415871", "status": "to-read", "title": "Crime and Punishment" },
+    { "ISBN": "9780062316097", "status": "to-read", "title": "Sapiens" },
+  ]
 };
 
 export default config;

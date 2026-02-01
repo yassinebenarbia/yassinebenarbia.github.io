@@ -25,11 +25,11 @@ import CertificationCard from './certification-card';
 import { GithubProject } from '../interfaces/github-project';
 import GithubProjectCard from './github-project-card';
 import ExternalProjectCard from './external-project-card';
-import BlogCard from './blog-card';
 import Footer from './footer';
 import PublicationCard from './publication-card';
 import { UserConfig as Config } from '@/interfaces/user-config';
 import { BG_COLOR } from "@/constants";
+import BlogCard from "./blog-card";
 
 const LandingPage = ({ config }: { config: Config }) => {
   const [sanitizedConfig] = useState<SanitizedConfig | Record<string, never>>(

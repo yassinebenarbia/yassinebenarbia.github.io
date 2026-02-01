@@ -2,7 +2,6 @@ import { format } from "date-fns";
 import { UserConfig as Config, BlogArticle } from "@/interfaces/user-config";
 import ThemeChanger from "./theme-changer";
 import { getSanitizedConfig } from "../utils";
-import Tag from "../interfaces/tags";
 import { BG_COLOR } from "@/constants";
 
 const renderBlogs = (blogs: Record<string, BlogArticle>) => {
@@ -70,38 +69,38 @@ const BlogList = ({ config }: { config: Config }) => {
   const sanitizedConfig = getSanitizedConfig(config);
 
   return (
-      <div className={`p-4 lg:p-10 min-h-full ${BG_COLOR}`} >
-        <div className="flex justify-between items-center">
-          <a href="/" className="btn btn-ghost">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 19l-7-7m0 0l7-7m-7 7h18"
-              />
-            </svg>
-            Back
-          </a>
-          <ThemeChanger
-            loading={false}
-            themeConfig={sanitizedConfig.themeConfig}
-          />
-        </div>
-        <div className="text-center mt-4">
-          <h1 className="text-5xl lg:text-7xl font-bold mb-10">{header}</h1>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {renderBlogs(config.blogs)}
-        </div>
+    <div className={`p-4 lg:p-10 min-h-full ${BG_COLOR}`} >
+      <div className="flex justify-between items-center">
+        <a href="/" className="btn btn-ghost">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+          Back
+        </a>
+        <ThemeChanger
+          loading={false}
+          themeConfig={sanitizedConfig.themeConfig}
+        />
       </div>
-      );
+      <div className="text-center mt-4">
+        <h1 className="text-5xl lg:text-7xl font-bold mb-10">{header}</h1>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {renderBlogs(config.blogs)}
+      </div>
+    </div>
+  );
 };
 
-      export default BlogList;
+export default BlogList;

@@ -4,6 +4,7 @@ import GitProfile from "./components/gitprofile.tsx";
 import BlogList from "./components/blog-list.tsx";
 import BlogPage from "./components/blog.tsx";
 import App from "./App.tsx";
+import ReadingList from "./pages/Books.tsx";
 import "./assets/index.css";
 
 
@@ -32,6 +33,7 @@ const Root = () => {
           <Routes>
             <Route path="/" element={<App config={CONFIG} />}>
               <Route path="" element={<GitProfile config={CONFIG} />} />
+              <Route path="books" element={<ReadingList config = {CONFIG} />} />
               <Route path="blogs" element={<BlogList config={CONFIG} />} />
               <Route
                 path="blogs/:BlogName"

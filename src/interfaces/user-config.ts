@@ -7,6 +7,14 @@ interface Github {
   username: string;
 }
 
+
+export type BookStatus = "read" | "reading" | "to-read" | "wont-read";
+
+export interface Book {
+  ISBN: string,
+  status: BookStatus, title?: string
+}
+
 interface GitHubProjects {
   /**
    * Display GitHub projects?
@@ -486,4 +494,9 @@ export interface UserConfig {
    * Enable PWA
    */
   enablePWA?: boolean;
+
+  /**
+   * Reading list
+   */
+  books?: Book[];
 }
