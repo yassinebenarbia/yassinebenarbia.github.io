@@ -12,7 +12,8 @@ export type BookStatus = "read" | "reading" | "to-read" | "wont-read";
 
 export interface Book {
   ISBN: string,
-  status: BookStatus, title?: string
+  status: BookStatus,
+  title?: string
 }
 
 interface GitHubProjects {
