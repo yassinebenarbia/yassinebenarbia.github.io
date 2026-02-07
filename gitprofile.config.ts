@@ -223,8 +223,8 @@ const config: UserConfig = {
     { "ISBN": "9781685891244", "status": "read", "title": "Technofeudalism" },
     { "ISBN": "9788197022272", "status": "read", "title": "How to Take Smart Notes" },
     { "ISBN": "9781612680019", "status": "read", "title": "Rich Dad Poor Dad" },
+    { "ISBN": "9781982150921", "status": "read", "title": "Tender is the flesh" },
 
-    { "ISBN": "9781982150921", "status": "reading", "title": "Tender in the flesh" },
     { "ISBN": "9780525512196", "status": "reading", "title": "21 Lessons for the 21st Cetury" },
 
     { "ISBN": "9780804795098", "status": "to-read", "title": "The Burnout Society" },
