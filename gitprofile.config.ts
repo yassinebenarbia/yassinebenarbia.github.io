@@ -226,6 +226,7 @@ const config: UserConfig = {
     { "ISBN": "9781982150921", "status": "read", "title": "Tender is the flesh" },
 
     { "ISBN": "9780525512196", "status": "reading", "title": "21 Lessons for the 21st Cetury" },
+    { "ISBN": "9781787333826", "status": "reading", "title": "Lapvona" },
 
     { "ISBN": "9780804795098", "status": "to-read", "title": "The Burnout Society" },
     { "ISBN": "9780140447927", "status": "to-read", "title": "The Idiot" },
