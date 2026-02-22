@@ -4,6 +4,18 @@ import { BookStatus, UserConfig as Config } from "@/interfaces/user-config";
 import { getSanitizedConfig } from '@/utils';
 import { BG_COLOR } from '@/constants';
 import ThemeChanger from '@/components/theme-changer';
+import BookCard from '@/components/book-card';
+
+/// Fetches books using ISBN number derived from config and appends config rating
+const CACHE_PREFIX = "book_";
+const CACHE_VERSION = "v1";
+const CACHE_TTL = 1000 * 60 * 60 * 24 * 30; // 30 days
+
+type CachedBook = {
+  version: string;
+  timestamp: number;
+  data: any;
+};
 
 interface Book {
   title: string;
@@ -11,6 +23,7 @@ interface Book {
   status: BookStatus;
   link?: string;
   imageUrl?: string;
+  rating?: number;
 }
 
 class Book implements Book {
@@ -19,6 +32,7 @@ class Book implements Book {
   status: BookStatus;
   link?: string;
   imageUrl?: string;
+  rating?: number;
 
   constructor(
     title: string,
@@ -26,11 +40,13 @@ class Book implements Book {
     status: BookStatus,
     link?: string,
     imageUrl?: string,
+    rating?: number,
   ) {
     this.title = title;
     this.authors = authors;
     this.status = status;
     this.link = link;
+    this.rating = rating;
     this.imageUrl = imageUrl;
   }
 }
@@ -38,6 +54,7 @@ class Book implements Book {
 interface BookISBN {
   ISBN: string;
   status: BookStatus;
+  rating?: number;
 }
 
 interface BookCover {
@@ -46,8 +63,12 @@ interface BookCover {
   large?: string;
 }
 
-async function imageCover(cover: BookCover | undefined, isbn: string | undefined): Promise<string> {
-  const placeholder = 'https://openlibrary.org/images/icons/avatar_book-lg.png';
+async function imageCover(
+  cover: BookCover | undefined,
+  isbn: string | undefined
+): Promise<string> {
+  const placeholder =
+    "https://openlibrary.org/images/icons/avatar_book-lg.png";
 
   let imageUrl = cover?.large ?? cover?.medium ?? cover?.small;
 
@@ -55,34 +76,30 @@ async function imageCover(cover: BookCover | undefined, isbn: string | undefined
     imageUrl = `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`;
   }
 
-  if (!imageUrl) {
-    return placeholder;
-  }
+  if (!imageUrl) return placeholder;
 
   try {
-    const cache = await caches.open('covers-v1');
-    let cachedResponse = await cache.match(imageUrl);
+    const cache = await caches.open("covers-v1");
+    const cached = await cache.match(imageUrl);
 
-    if (!cachedResponse) {
-      console.log(`Caching image: ${imageUrl}`);
-      const response = await fetch(imageUrl);
-
-      if (!response.ok) {
-        return placeholder;
-      }
-
-      await cache.put(imageUrl, response.clone());
-      cachedResponse = response;
+    if (cached) {
+      return imageUrl;
     }
 
-    const blob = await cachedResponse.blob();
+    const response = await fetch(imageUrl, { cache: "force-cache" });
 
-    if (blob.size < 100) return placeholder;
+    if (!response.ok) return placeholder;
 
-    return URL.createObjectURL(blob);
+    const clone = response.clone();
+    await cache.put(imageUrl, clone);
 
-  } catch (error) {
-    console.error("Cache API error, falling back to direct URL:", error);
+    const blob = await response.blob();
+
+    if (blob.size < 200) return placeholder;
+
+    return imageUrl;
+  } catch (err) {
+    console.error("Cache error:", err);
     return imageUrl;
   }
 }
@@ -97,30 +114,7 @@ function renderBooks(categorizedBooks: Record<string, Book[]>): import("react").
           {categorizedBooks[status].length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {categorizedBooks[status].map((book) => (
-                <div key={book.title} className="bg-base-100 shadow-xl rounded-lg p-6 flex flex-col">
-                  <h3 className="text-2xl font-bold mb-2">{book.title}</h3>
-                  <p className="text-lg text-gray-500 mb-4">by {book.authors}</p>
-                  {book.imageUrl && (
-                    <img
-                      src={book.imageUrl}
-                      alt={`Cover of ${book.title}`}
-                      className="w-32 h-48 object-cover mx-auto mb-4 rounded-md shadow-md"
-                      loading="lazy"
-                    />
-                  )}
-                  <div className="mt-auto">
-                    {book.link && (
-                      <a
-                        href={book.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-primary btn-sm mr-2"
-                      >
-                        Details
-                      </a>
-                    )}
-                  </div>
-                </div>
+                <BookCard key={book.title} book={book} />
               ))}
             </div>
           ) : (
@@ -139,7 +133,6 @@ async function createBookInstances(
   configs: BookISBN[],
   apiData: Record<string, any>
 ): Promise<Book[]> {
-  console.log("asdf", apiData)
   const bookPromises = configs.map(async (config) => {
     const rawData = apiData[`ISBN:${config.ISBN}`];
     console.log("isbn", config.ISBN, "raw", rawData)
@@ -155,7 +148,8 @@ async function createBookInstances(
       authorNames,
       config.status as BookStatus,
       rawData?.url,
-      displayImage
+      displayImage,
+      config.rating,
     );
   });
 
@@ -166,28 +160,56 @@ async function fetchMyLibrary(configs: BookISBN[]): Promise<Book[]> {
   const cachedData: Record<string, any> = {};
   const missingCache: BookISBN[] = [];
 
-  configs.forEach(cfg => {
-    const saved = localStorage.getItem(`book_${cfg.ISBN}`);
-    if (saved) {
-      cachedData[`ISBN:${cfg.ISBN}`] = JSON.parse(saved);
-    } else {
-      missingCache.push(cfg);
+  for (const cfg of configs) {
+    const key = `${CACHE_PREFIX}${cfg.ISBN}`;
+    const raw = localStorage.getItem(key);
+
+    if (raw) {
+      try {
+        const parsed: CachedBook = JSON.parse(raw);
+
+        const isExpired = Date.now() - parsed.timestamp > CACHE_TTL;
+        const isWrongVersion = parsed.version !== CACHE_VERSION;
+
+        if (!isExpired && !isWrongVersion) {
+          cachedData[`ISBN:${cfg.ISBN}`] = parsed.data;
+          continue;
+        }
+      } catch {
+        console.warn("Corrupt cache removed:", key);
+        localStorage.removeItem(key);
+      }
     }
-  });
+
+    missingCache.push(cfg);
+  }
 
   let fullApiData = { ...cachedData };
 
   if (missingCache.length > 0) {
-    const bibkeys = missingCache.map(c => `ISBN:${c.ISBN}`).join(',');
+    const bibkeys = missingCache.map(c => `ISBN:${c.ISBN}`).join(",");
     const url = `https://openlibrary.org/api/books?bibkeys=${bibkeys}&jscmd=data&format=json`;
 
     try {
       const response = await fetch(url);
       const freshData = await response.json();
 
-      // Save to localStorage
       Object.entries(freshData).forEach(([key, val]) => {
-        localStorage.setItem(`book_${key.replace("ISBN:", "")}`, JSON.stringify(val));
+        const isbn = key.replace("ISBN:", "");
+        const cacheEntry: CachedBook = {
+          version: CACHE_VERSION,
+          timestamp: Date.now(),
+          data: val,
+        };
+
+        try {
+          localStorage.setItem(
+            `${CACHE_PREFIX}${isbn}`,
+            JSON.stringify(cacheEntry)
+          );
+        } catch (err) {
+          console.warn("localStorage quota exceeded, skipping cache");
+        }
       });
 
       fullApiData = { ...fullApiData, ...freshData };
@@ -196,7 +218,7 @@ async function fetchMyLibrary(configs: BookISBN[]): Promise<Book[]> {
     }
   }
 
-  return await createBookInstances(configs, fullApiData);
+  return createBookInstances(configs, fullApiData);
 }
 
 const ReadingList = ({ config }: { config: Config }) => {
@@ -277,4 +299,4 @@ const ReadingList = ({ config }: { config: Config }) => {
   );
 };
 
-export default ReadingList;
+export { ReadingList, Book };

@@ -14,6 +14,7 @@ export interface Book {
   ISBN: string,
   status: BookStatus,
   title?: string
+  rating?: number,
 }
 
 interface GitHubProjects {
