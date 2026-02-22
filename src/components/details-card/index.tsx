@@ -326,7 +326,7 @@ const DetailsCard = ({ profile, loading, social, github }: Props) => {
               }
               {
                 <SpaceButtons
-                  books_header={"My Reading Books!"}
+                  books_header={"My Reading List!"}
                   blogs_header={"My Blogs!"}
                 />
               }
