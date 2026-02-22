@@ -206,6 +206,7 @@ const config: UserConfig = {
   enablePWA: true,
   books: [
     // title field is optional
+    // TODO: add optional rating and review
     { "ISBN": "9780374533557", "status": "read", "title": "Thinking, Fast and Slow" },
     { "ISBN": "9780061353239", "status": "read", "title": "Predictably Irrational" },
     { "ISBN": "9780812993882", "status": "read", "title": "How We Learn The Surprising Truth About ..." },
@@ -224,9 +225,10 @@ const config: UserConfig = {
     { "ISBN": "9788197022272", "status": "read", "title": "How to Take Smart Notes" },
     { "ISBN": "9781612680019", "status": "read", "title": "Rich Dad Poor Dad" },
     { "ISBN": "9781982150921", "status": "read", "title": "Tender is the flesh" },
+    { "ISBN": "9781787333826", "status": "read", "title": "Lapvona" },
 
+    { "ISBN": "9781250237231", "status": "reading", "title": "Permanent Record" },
     { "ISBN": "9780525512196", "status": "reading", "title": "21 Lessons for the 21st Cetury" },
-    { "ISBN": "9781787333826", "status": "reading", "title": "Lapvona" },
 
     { "ISBN": "9780804795098", "status": "to-read", "title": "The Burnout Society" },
     { "ISBN": "9780140447927", "status": "to-read", "title": "The Idiot" },
