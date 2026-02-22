@@ -6,7 +6,7 @@ export default function BookCard({ book }: { book: Book }) {
   return (
     <article className="bg-base-100 shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg p-6 flex flex-col h-full">
 
-      <h3 className="text-xl font-bold leading-tight mb-1">
+      <h3 className="text-xl font-bold leading-tight mb-1 text-center">
         {book.title}
       </h3>
 
