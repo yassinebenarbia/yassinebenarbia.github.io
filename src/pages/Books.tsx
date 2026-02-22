@@ -107,23 +107,38 @@ async function imageCover(
 // Cast config to a type that includes the books array for easier access.
 function renderBooks(categorizedBooks: Record<string, Book[]>): import("react").ReactNode {
   return (
-    <div className="container mx-auto p-4">
-      {Object.keys(categorizedBooks).map((status) => (
-        <section key={status} className="mb-4">
-          <h2 className="text-3xl font-semibold capitalize mb-4">{status.replace('-', ' ')}</h2>
-          {categorizedBooks[status].length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {categorizedBooks[status].map((book) => (
+    <div className="max-w-7xl mx-auto px-4 py-6 space-y-12">
+      {Object.entries(categorizedBooks).map(([status, books]) => (
+        <section key={status} className="space-y-6">
+
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl md:text-3xl font-semibold capitalize tracking-tight">
+              {status.replace("-", " ")}
+            </h2>
+
+            <span className="text-sm text-gray-400">
+              {books.length} {books.length === 1 ? "book" : "books"}
+            </span>
+          </div>
+
+          <div className="h-px bg-base-300 opacity-60" />
+
+          {books.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {books.map((book) => (
                 <BookCard key={book.title} book={book} />
               ))}
             </div>
           ) : (
-            <p className="text-gray-500">No books in this category yet.</p>
+            <div className="text-center py-10 text-gray-400 italic">
+              No books in this category yet.
+            </div>
           )}
+
         </section>
       ))}
     </div>
-  )
+  );
 }
 
 /**
