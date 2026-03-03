@@ -232,7 +232,7 @@ const config: UserConfig = {
     { "ISBN": "9780525512196", "status": "reading", "title": "21 Lessons for the 21st Cetury" },
 
     { "ISBN": "9780141195377", "status": "to-read", "title": "On the Genealogy of Morals" },
-    { "ISBN": "9781534863446", "status": "to-read", "title": "The problems of philosophy" },
+    { "ISBN": "9781614274865", "status": "to-read", "title": "The problems of philosophy" },
     { "ISBN": "9780679720201", "status": "to-read", "title": "The Stranger" },
     { "ISBN": "9781501110368", "status": "to-read", "title": "It ends with us" },
     { "ISBN": "9780804795098", "status": "to-read", "title": "The Burnout Society" },
