@@ -228,8 +228,9 @@ const config: UserConfig = {
     { "ISBN": "9781982150921", "status": "read", "title": "Tender is the flesh", "rating": 2.5 },
     { "ISBN": "9781787333826", "status": "read", "title": "Lapvona", "rating": 3.0 },
 
-    { "ISBN": "9781250237231", "status": "reading", "title": "Permanent Record" },
+    { "ISBN": "9781784043209", "status": "reading", "title": "Brave New World" },
     { "ISBN": "9780525512196", "status": "reading", "title": "21 Lessons for the 21st Cetury" },
+    { "ISBN": "9781250237231", "status": "reading", "title": "Permanent Record" },
 
     { "ISBN": "9780141195377", "status": "to-read", "title": "On the Genealogy of Morals" },
     { "ISBN": "9781614274865", "status": "to-read", "title": "The problems of philosophy" },
