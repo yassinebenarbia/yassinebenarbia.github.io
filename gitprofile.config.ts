@@ -215,7 +215,8 @@ const config: UserConfig = {
     { "ISBN": "9780140441185", "status": "read", "title": "Thus Spoke Zarathustra", "rating": 4.0 },
     { "ISBN": "9780151072552", "status": "read", "title": "Animal Farm", "rating": 4.3 },
     { "ISBN": "9781451683400", "status": "read", "title": "Free Will", "rating": 4.5 },
-    { "ISBN": "9781676885634", "status": "read", "title": "White nights" , "rating": 4.3 },
+    { "ISBN": "9781451673319", "status": "read", "title": "Fahrenheit 451", "rating": 4.5 },
+    { "ISBN": "9781676885634", "status": "read", "title": "White nights", "rating": 4.3 },
     { "ISBN": "9781501197277", "status": "read", "title": "The Courage to Be Disliked", "rating": 3.0 },
     { "ISBN": "9781250118363", "status": "read", "title": "Algorithms to live by", "rating": 5.0 },
     { "ISBN": "9781982518172", "status": "read", "title": "The Skeptics' Guide to the Universe", "rating": 4.0 },
@@ -227,7 +228,6 @@ const config: UserConfig = {
     { "ISBN": "9781982150921", "status": "read", "title": "Tender is the flesh", "rating": 2.5 },
     { "ISBN": "9781787333826", "status": "read", "title": "Lapvona", "rating": 3.0 },
 
-    { "ISBN": "9781451673319", "status": "reading", "title": "Fahrenheit 451" },
     { "ISBN": "9781250237231", "status": "reading", "title": "Permanent Record" },
     { "ISBN": "9780525512196", "status": "reading", "title": "21 Lessons for the 21st Cetury" },
 
