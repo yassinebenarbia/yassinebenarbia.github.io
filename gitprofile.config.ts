@@ -228,12 +228,16 @@ const config: UserConfig = {
     { "ISBN": "9781982150921", "status": "read", "title": "Tender is the flesh", "rating": 2.5 },
     { "ISBN": "9781787333826", "status": "read", "title": "Lapvona", "rating": 3.0 },
 
-    { "ISBN": "9781784043209", "status": "reading", "title": "Brave New World" },
     { "ISBN": "9780525512196", "status": "reading", "title": "21 Lessons for the 21st Cetury" },
+    { "ISBN": "9780521636452", "status": "reading", "title": "The Gay science" },
+    { "ISBN": "9781614274865", "status": "reading", "title": "The problems of philosophy" },
+    { "ISBN": "0486292568", "status": "reading", "title": "Wuthering Heights" },
     { "ISBN": "9781250237231", "status": "reading", "title": "Permanent Record" },
 
     { "ISBN": "9780141195377", "status": "to-read", "title": "On the Genealogy of Morals" },
-    { "ISBN": "9781614274865", "status": "to-read", "title": "The problems of philosophy" },
+    { "ISBN": "9780521779135", "status": "to-read", "title": "Beyond Good and Evil" },
+    { "ISBN": "9780571368709", "status": "to-read", "title": "Small Things Like These" },
+    { "ISBN": "9780141439518", "status": "to-read", "title": "Pride and prejiduce" },
     { "ISBN": "9780679720201", "status": "to-read", "title": "The Stranger" },
     { "ISBN": "9781501110368", "status": "to-read", "title": "It ends with us" },
     { "ISBN": "9780804795098", "status": "to-read", "title": "The Burnout Society" },
