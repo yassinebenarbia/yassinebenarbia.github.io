@@ -166,9 +166,9 @@ function renderBooks(
   onToggleSection: (status: BookStatus) => void
 ): import("react").ReactNode {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6 space-y-8">
+    <div className="mx-auto max-w-7xl px-3 py-5 space-y-6 sm:px-4 sm:py-6 sm:space-y-8">
       <nav className="reading-list-nav">
-        <div className="grid gap-3 md:grid-cols-4">
+        <div className="reading-list-nav-grid grid gap-3 md:grid-cols-4">
           {BOOK_STATUSES.map((status) => {
             const meta = STATUS_META[status];
             const books = categorizedBooks[status];
@@ -179,19 +179,21 @@ function renderBooks(
                 key={status}
                 type="button"
                 onClick={() => onSelectSection(status)}
-                className={`rounded-3xl border bg-base-100/85 p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${meta.border}`}
+                className={`min-w-0 rounded-[1.5rem] border bg-base-100/85 p-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:rounded-3xl sm:p-4 ${meta.border}`}
               >
-                <p className={`text-xs font-semibold uppercase tracking-[0.24em] ${meta.accent}`}>
+                <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] sm:text-xs sm:tracking-[0.24em] ${meta.accent}`}>
                   {meta.eyebrow}
                 </p>
-                <div className="mt-2 flex items-end justify-between gap-3">
-                  <div>
-                    <h2 className="text-lg font-semibold">{meta.label}</h2>
-                    <p className="text-sm text-base-content/65">{meta.description}</p>
+                <div className="mt-2 flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h2 className="text-base font-semibold sm:text-lg">{meta.label}</h2>
+                    <p className="mt-1 line-clamp-2 text-xs leading-5 text-base-content/65 sm:text-sm">
+                      {meta.description}
+                    </p>
                   </div>
-                  <div className="text-right">
-                    <span className="block text-3xl font-bold leading-none">{books.length}</span>
-                    <span className="mt-2 block text-xs uppercase tracking-[0.2em] text-base-content/45">
+                  <div className="shrink-0 text-right">
+                    <span className="block text-2xl font-bold leading-none sm:text-3xl">{books.length}</span>
+                    <span className="mt-2 block text-[10px] uppercase tracking-[0.18em] text-base-content/45 sm:text-xs sm:tracking-[0.2em]">
                       {isExpanded ? "Open" : "Closed"}
                     </span>
                   </div>
@@ -214,10 +216,10 @@ function renderBooks(
             key={status}
             id={status}
             data-reading-section={status}
-            className="scroll-mt-28"
+            className="scroll-mt-24 sm:scroll-mt-28"
           >
             <div
-            className={`overflow-hidden rounded-[2rem] border bg-gradient-to-br ${meta.surface} bg-base-100/90 p-5 shadow-sm md:p-7 ${meta.border}`}
+              className={`overflow-hidden rounded-[1.6rem] border bg-gradient-to-br ${meta.surface} bg-base-100/90 p-4 shadow-sm sm:rounded-[2rem] sm:p-5 md:p-7 ${meta.border}`}
             >
               <button
                 type="button"
@@ -225,11 +227,11 @@ function renderBooks(
                 aria-expanded={isExpanded}
                 className="flex w-full flex-col gap-4 text-left md:flex-row md:items-end md:justify-between"
               >
-                <div className="max-w-2xl">
-                  <p className={`text-xs font-semibold uppercase tracking-[0.28em] ${meta.accent}`}>
+                <div className="max-w-2xl min-w-0">
+                  <p className={`text-[10px] font-semibold uppercase tracking-[0.22em] sm:text-xs sm:tracking-[0.28em] ${meta.accent}`}>
                     {meta.eyebrow}
                   </p>
-                  <h3 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
+                  <h3 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
                     {meta.label}
                   </h3>
                   <p className="mt-2 text-sm leading-6 text-base-content/70 md:text-base">
@@ -237,11 +239,11 @@ function renderBooks(
                   </p>
                 </div>
 
-                <div className="flex items-center gap-3 self-start md:self-auto">
-                  <div className="rounded-2xl border border-base-300/80 bg-base-100/80 px-4 py-3 text-sm text-base-content/70">
+                <div className="flex w-full items-center justify-between gap-3 self-start sm:w-auto md:self-auto">
+                  <div className="rounded-2xl border border-base-300/80 bg-base-100/80 px-3 py-2 text-sm text-base-content/70 sm:px-4 sm:py-3">
                     {books.length} {books.length === 1 ? "book" : "books"}
                   </div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-base-300/80 bg-base-100/80 text-base-content/70">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-base-300/80 bg-base-100/80 text-base-content/70 sm:h-12 sm:w-12">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -259,15 +261,15 @@ function renderBooks(
               <div className="mt-6 border-t border-base-300/70 pt-6">
                 {books.length > 0 ? (
                   <div className="space-y-4">
-                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
                       {visibleBooks.map((book) => (
                         <BookCard key={`${status}-${book.title}`} book={book} />
                       ))}
                     </div>
 
                     {books.length > 1 && (
-                      <div className="flex items-center justify-between gap-4 rounded-2xl border border-dashed border-base-300/80 bg-base-100/60 px-4 py-3">
-                        <p className="text-sm text-base-content/60">
+                      <div className="flex flex-col items-start justify-between gap-3 rounded-2xl border border-dashed border-base-300/80 bg-base-100/60 px-4 py-3 sm:flex-row sm:items-center sm:gap-4">
+                        <p className="text-sm leading-6 text-base-content/60">
                           {isExpanded
                             ? "Showing the full list."
                             : `${hiddenCount} more ${hiddenCount === 1 ? "book" : "books"} hidden in preview.`}
@@ -275,7 +277,7 @@ function renderBooks(
                         <button
                           type="button"
                           onClick={() => onToggleSection(status)}
-                          className="inline-flex items-center rounded-full border border-base-300 px-4 py-2 text-sm font-medium text-base-content/80 transition hover:border-base-content/25 hover:text-base-content"
+                          className="inline-flex w-full items-center justify-center rounded-full border border-base-300 px-4 py-2 text-sm font-medium text-base-content/80 transition hover:border-base-content/25 hover:text-base-content sm:w-auto"
                         >
                           {isExpanded ? "Show less" : "Expand list"}
                         </button>
@@ -311,14 +313,14 @@ function BooksOverview({ categorizedBooks }: { categorizedBooks: CategorizedBook
   }, [categorizedBooks]);
 
   return (
-    <section className="mx-auto mt-8 max-w-7xl px-4">
-      <div className="overflow-hidden rounded-[2rem] border border-base-300/70 bg-base-100/85 shadow-sm">
-        <div className="grid gap-8 p-6 md:grid-cols-[1.6fr_1fr] md:p-8">
+    <section className="mx-auto mt-6 max-w-7xl px-3 sm:mt-8 sm:px-4">
+      <div className="overflow-hidden rounded-[1.6rem] border border-base-300/70 bg-base-100/85 shadow-sm sm:rounded-[2rem]">
+        <div className="grid gap-6 p-4 sm:gap-8 sm:p-6 md:grid-cols-[1.6fr_1fr] md:p-8">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-base-content/55">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-base-content/55 sm:text-sm sm:tracking-[0.28em]">
               Personal library
             </p>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight md:text-6xl">
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl md:text-6xl">
               Reading List
             </h1>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-base-content/70 md:text-base">
@@ -326,7 +328,7 @@ function BooksOverview({ categorizedBooks }: { categorizedBooks: CategorizedBook
             </p>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-3 md:grid-cols-1">
+          <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:grid-cols-3 md:grid-cols-1">
             <div className="rounded-2xl border border-base-300/80 bg-base-200/60 p-4">
               <p className="text-xs uppercase tracking-[0.24em] text-base-content/50">Total</p>
               <p className="mt-2 text-3xl font-semibold">{totals.total}</p>

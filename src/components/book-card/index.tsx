@@ -25,8 +25,8 @@ export default function BookCard({ book }: { book: Book }) {
   const badge = STATUS_BADGE[book.status];
 
   return (
-    <article className="flex h-full flex-col rounded-[1.75rem] border border-base-300/70 bg-base-100 p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg">
-      <div className="mb-4 flex items-start justify-between gap-3">
+    <article className="flex h-full flex-col rounded-[1.4rem] border border-base-300/70 bg-base-100 p-4 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg sm:rounded-[1.75rem] sm:p-5">
+      <div className="mb-3 flex items-start justify-between gap-3 sm:mb-4">
         <span className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] ${badge.classes}`}>
           {badge.label}
         </span>
@@ -57,7 +57,7 @@ export default function BookCard({ book }: { book: Book }) {
               <img
                 src={book.imageUrl}
                 alt={`Cover of ${book.title}`}
-                className="h-44 w-32 rounded-2xl object-cover shadow-md transition hover:opacity-90"
+                className="h-40 w-28 rounded-2xl object-cover shadow-md transition hover:opacity-90 sm:h-44 sm:w-32"
                 loading="lazy"
               />
             </a>
@@ -65,18 +65,18 @@ export default function BookCard({ book }: { book: Book }) {
             <img
               src={book.imageUrl}
               alt={`Cover of ${book.title}`}
-              className="h-44 w-32 shrink-0 rounded-2xl object-cover shadow-md"
+              className="h-40 w-28 shrink-0 rounded-2xl object-cover shadow-md sm:h-44 sm:w-32"
               loading="lazy"
             />
           )
         ) : (
-          <div className="flex h-44 w-32 shrink-0 items-center justify-center rounded-2xl bg-base-200 text-center text-xs text-base-content/45">
+          <div className="flex h-40 w-28 shrink-0 items-center justify-center rounded-2xl bg-base-200 text-center text-xs text-base-content/45 sm:h-44 sm:w-32">
             No Cover
           </div>
         )}
 
         <div className="mt-4 min-w-0 flex-1">
-          <h3 className="text-lg font-semibold leading-tight text-base-content">
+          <h3 className="text-base font-semibold leading-tight text-base-content sm:text-lg">
             {book.title}
           </h3>
 
@@ -86,7 +86,7 @@ export default function BookCard({ book }: { book: Book }) {
             </p>
           </Tooltip>
 
-          <div className="mt-5 pt-2">
+          <div className="mt-4 pt-2 sm:mt-5">
             {book.link ? (
               <a
                 href={book.link}
