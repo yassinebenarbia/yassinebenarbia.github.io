@@ -4,6 +4,7 @@ import { getSanitizedConfig } from '@/utils';
 import { BG_COLOR } from '@/constants';
 import ThemeChanger from '@/components/theme-changer';
 import BookCard from '@/components/book-card';
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 /// Fetches books using ISBN number derived from config and appends config rating
 const CACHE_PREFIX = "book_";
@@ -67,6 +68,10 @@ type ExpandedSections = Record<BookStatus, boolean>;
 
 const BOOK_STATUSES: BookStatus[] = ["reading", "to-read", "read", "wont-read"];
 const PREVIEW_BOOK_COUNT = 3;
+
+function isBookStatus(value: string | undefined): value is BookStatus {
+  return value != null && BOOK_STATUSES.includes(value as BookStatus);
+}
 
 const STATUS_META: Record<
   BookStatus,
@@ -454,6 +459,8 @@ async function fetchMyLibrary(configs: BookISBN[]): Promise<Book[]> {
 }
 
 const ReadingList = ({ config }: { config: Config }) => {
+  const navigate = useNavigate();
+  const { status } = useParams<{ status?: string }>();
   const [categorizedBooks, setCategorizedBooks] = useState<CategorizedBooks>({
     read: [],
     reading: [],
@@ -467,10 +474,9 @@ const ReadingList = ({ config }: { config: Config }) => {
     'wont-read': false,
   });
   const [loading, setLoading] = useState(true);
+  const activeStatus = isBookStatus(status) ? status : null;
 
   const focusSection = (status: BookStatus) => {
-    window.history.replaceState(null, "", `#${status}`);
-
     requestAnimationFrame(() => {
       const section = document.querySelector<HTMLElement>(
         `[data-reading-section="${status}"]`
@@ -495,6 +501,7 @@ const ReadingList = ({ config }: { config: Config }) => {
   };
 
   const selectSection = (status: BookStatus) => {
+    navigate(`/books/${status}`);
     focusSection(status);
   };
 
@@ -530,20 +537,18 @@ const ReadingList = ({ config }: { config: Config }) => {
   }, []);
 
   useEffect(() => {
-    const activeStatus = BOOK_STATUSES.find((status) => expandedSections[status]);
+    const openStatus = BOOK_STATUSES.find((bookStatus) => expandedSections[bookStatus]);
 
-    if (activeStatus) {
-      focusSection(activeStatus);
+    if (openStatus) {
+      focusSection(openStatus);
     }
   }, [expandedSections]);
 
   useEffect(() => {
-    const hash = window.location.hash.replace("#", "") as BookStatus;
-
-    if (BOOK_STATUSES.includes(hash)) {
-      focusSection(hash);
+    if (activeStatus) {
+      focusSection(activeStatus);
     }
-  }, []);
+  }, [activeStatus]);
 
   if (loading) {
     return (
@@ -558,7 +563,7 @@ const ReadingList = ({ config }: { config: Config }) => {
   return (
     <div className={`p-4 lg:p-10 min-h-full ${BG_COLOR}`} >
       <div className="flex justify-between items-center">
-        <a href="/" className="btn btn-ghost">
+        <Link to="/" className="btn btn-ghost">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -574,7 +579,7 @@ const ReadingList = ({ config }: { config: Config }) => {
             />
           </svg>
           Back
-        </a>
+        </Link>
         <ThemeChanger
           loading={false}
           themeConfig={sanitizedConfig.themeConfig}

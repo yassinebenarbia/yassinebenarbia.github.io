@@ -32,11 +32,12 @@ const Root = () => {
         <ThemeProvider value={{ theme, setTheme }}>
           <Routes>
             <Route path="/" element={<App config={CONFIG} />}>
-              <Route path="" element={<GitProfile config={CONFIG} />} />
-              <Route path="books" element={<ReadingList config={CONFIG} />} />
-              <Route path="blogs" element={<BlogList config={CONFIG} />} />
-              <Route
-                path="blogs/:BlogName"
+            <Route path="" element={<GitProfile config={CONFIG} />} />
+            <Route path="books" element={<ReadingList config={CONFIG} />} />
+            <Route path="books/:status" element={<ReadingList config={CONFIG} />} />
+            <Route path="blogs" element={<BlogList config={CONFIG} />} />
+            <Route
+              path="blogs/:BlogName"
                 element={<BlogPage config={CONFIG} />}
               />
             </Route>
