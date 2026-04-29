@@ -104,9 +104,23 @@ const config: UserConfig = {
       to: "June 2024",
       companyLink: "https://isitcom.rnu.tn/",
     },
+    {
+      company: "Rotko Networks",
+      position: "Software Developer",
+      from: "November 2024",
+      to: "November 2025",
+      companyLink: "https://rotko.net/",
+    },
   ],
   certifications: [],
   educations: [
+    {
+      institution:
+        "Higher Institute of Scientific Applications and Technology",
+      degree:
+        "Masters Degree in Data Science",
+      year: "2024",
+    },
     {
       institution:
         "Higher Institute of Informatics and Communication Technologies (ISITCom)",
@@ -216,6 +230,7 @@ const config: UserConfig = {
     { "ISBN": "9780151072552", "status": "read", "title": "Animal Farm", "rating": 4.3 },
     { "ISBN": "9781451683400", "status": "read", "title": "Free Will", "rating": 4.5 },
     { "ISBN": "9781451673319", "status": "read", "title": "Fahrenheit 451", "rating": 4.5 },
+    { "ISBN": "9781784043209", "status": "read", "title": "Brave New World", "rating": 4.5 },
     { "ISBN": "9781676885634", "status": "read", "title": "White nights", "rating": 4.3 },
     { "ISBN": "9781501197277", "status": "read", "title": "The Courage to Be Disliked", "rating": 3.0 },
     { "ISBN": "9781250118363", "status": "read", "title": "Algorithms to live by", "rating": 5.0 },

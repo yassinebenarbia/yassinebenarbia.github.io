@@ -96,3 +96,21 @@ svg {
     opacity: 1;
   }
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+.reading-list-nav {
+  position: sticky;
+  top: 1rem;
+  z-index: 10;
+}
+
+.book-shelf {
+  scroll-snap-type: x proximity;
+}
+
+.book-shelf::-webkit-scrollbar {
+  height: 10px;
+}

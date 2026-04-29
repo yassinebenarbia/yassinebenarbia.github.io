@@ -1,5 +1,4 @@
-// TODO: add personal rating
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { BookStatus, UserConfig as Config } from "@/interfaces/user-config";
 import { getSanitizedConfig } from '@/utils';
 import { BG_COLOR } from '@/constants';
@@ -63,6 +62,62 @@ interface BookCover {
   large?: string;
 }
 
+type CategorizedBooks = Record<BookStatus, Book[]>;
+type ExpandedSections = Record<BookStatus, boolean>;
+
+const BOOK_STATUSES: BookStatus[] = ["reading", "to-read", "read", "wont-read"];
+const PREVIEW_BOOK_COUNT = 3;
+
+const STATUS_META: Record<
+  BookStatus,
+  {
+    label: string;
+    eyebrow: string;
+    description: string;
+    accent: string;
+    surface: string;
+    border: string;
+    empty: string;
+  }
+> = {
+  reading: {
+    label: "Reading",
+    eyebrow: "In progress",
+    description: "Books currently open and actively being worked through.",
+    accent: "text-amber-500",
+    surface: "from-amber-500/20 via-transparent to-transparent",
+    border: "border-amber-500/30",
+    empty: "Nothing is being read right now.",
+  },
+  "to-read": {
+    label: "To Read",
+    eyebrow: "Up next",
+    description: "Titles queued up for future reading.",
+    accent: "text-sky-500",
+    surface: "from-sky-500/20 via-transparent to-transparent",
+    border: "border-sky-500/30",
+    empty: "No books are queued here yet.",
+  },
+  read: {
+    label: "Have Read",
+    eyebrow: "Finished",
+    description: "Completed books with ratings where available.",
+    accent: "text-emerald-500",
+    surface: "from-emerald-500/20 via-transparent to-transparent",
+    border: "border-emerald-500/30",
+    empty: "No finished books have been added yet.",
+  },
+  "wont-read": {
+    label: "Won't Read",
+    eyebrow: "Passed on",
+    description: "Books intentionally skipped or dropped.",
+    accent: "text-rose-500",
+    surface: "from-rose-500/20 via-transparent to-transparent",
+    border: "border-rose-500/30",
+    empty: "Nothing has been marked as skipped.",
+  },
+};
+
 async function imageCover(
   cover: BookCover | undefined,
   isbn: string | undefined
@@ -104,39 +159,199 @@ async function imageCover(
   }
 }
 
-// Cast config to a type that includes the books array for easier access.
-function renderBooks(categorizedBooks: Record<string, Book[]>): import("react").ReactNode {
+function renderBooks(
+  categorizedBooks: CategorizedBooks,
+  expandedSections: ExpandedSections,
+  onSelectSection: (status: BookStatus) => void,
+  onToggleSection: (status: BookStatus) => void
+): import("react").ReactNode {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6 space-y-12">
-      {Object.entries(categorizedBooks).map(([status, books]) => (
-        <section key={status} className="space-y-6">
+    <div className="max-w-7xl mx-auto px-4 py-6 space-y-8">
+      <nav className="reading-list-nav">
+        <div className="grid gap-3 md:grid-cols-4">
+          {BOOK_STATUSES.map((status) => {
+            const meta = STATUS_META[status];
+            const books = categorizedBooks[status];
+            const isExpanded = expandedSections[status];
 
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl md:text-3xl font-semibold capitalize tracking-tight">
-              {status.replace("-", " ")}
-            </h2>
+            return (
+              <button
+                key={status}
+                type="button"
+                onClick={() => onSelectSection(status)}
+                className={`rounded-3xl border bg-base-100/85 p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${meta.border}`}
+              >
+                <p className={`text-xs font-semibold uppercase tracking-[0.24em] ${meta.accent}`}>
+                  {meta.eyebrow}
+                </p>
+                <div className="mt-2 flex items-end justify-between gap-3">
+                  <div>
+                    <h2 className="text-lg font-semibold">{meta.label}</h2>
+                    <p className="text-sm text-base-content/65">{meta.description}</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="block text-3xl font-bold leading-none">{books.length}</span>
+                    <span className="mt-2 block text-xs uppercase tracking-[0.2em] text-base-content/45">
+                      {isExpanded ? "Open" : "Closed"}
+                    </span>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
 
-            <span className="text-sm text-gray-400">
-              {books.length} {books.length === 1 ? "book" : "books"}
-            </span>
+      {BOOK_STATUSES.map((status) => {
+        const books = categorizedBooks[status];
+        const meta = STATUS_META[status];
+        const isExpanded = expandedSections[status];
+        const visibleBooks = isExpanded ? books : books.slice(0, PREVIEW_BOOK_COUNT);
+        const hiddenCount = books.length - visibleBooks.length;
+
+        return (
+          <section
+            key={status}
+            id={status}
+            data-reading-section={status}
+            className="scroll-mt-28"
+          >
+            <div
+            className={`overflow-hidden rounded-[2rem] border bg-gradient-to-br ${meta.surface} bg-base-100/90 p-5 shadow-sm md:p-7 ${meta.border}`}
+            >
+              <button
+                type="button"
+                onClick={() => onToggleSection(status)}
+                aria-expanded={isExpanded}
+                className="flex w-full flex-col gap-4 text-left md:flex-row md:items-end md:justify-between"
+              >
+                <div className="max-w-2xl">
+                  <p className={`text-xs font-semibold uppercase tracking-[0.28em] ${meta.accent}`}>
+                    {meta.eyebrow}
+                  </p>
+                  <h3 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
+                    {meta.label}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-base-content/70 md:text-base">
+                    {meta.description}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3 self-start md:self-auto">
+                  <div className="rounded-2xl border border-base-300/80 bg-base-100/80 px-4 py-3 text-sm text-base-content/70">
+                    {books.length} {books.length === 1 ? "book" : "books"}
+                  </div>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-base-300/80 bg-base-100/80 text-base-content/70">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                      className={`h-5 w-5 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
+                    </svg>
+                  </div>
+                </div>
+              </button>
+
+              <div className="mt-6 border-t border-base-300/70 pt-6">
+                {books.length > 0 ? (
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+                      {visibleBooks.map((book) => (
+                        <BookCard key={`${status}-${book.title}`} book={book} />
+                      ))}
+                    </div>
+
+                    {books.length > 1 && (
+                      <div className="flex items-center justify-between gap-4 rounded-2xl border border-dashed border-base-300/80 bg-base-100/60 px-4 py-3">
+                        <p className="text-sm text-base-content/60">
+                          {isExpanded
+                            ? "Showing the full list."
+                            : `${hiddenCount} more ${hiddenCount === 1 ? "book" : "books"} hidden in preview.`}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => onToggleSection(status)}
+                          className="inline-flex items-center rounded-full border border-base-300 px-4 py-2 text-sm font-medium text-base-content/80 transition hover:border-base-content/25 hover:text-base-content"
+                        >
+                          {isExpanded ? "Show less" : "Expand list"}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="py-6 text-center italic text-base-content/55">
+                    {meta.empty}
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+function BooksOverview({ categorizedBooks }: { categorizedBooks: CategorizedBooks }) {
+  const totals = useMemo(() => {
+    const total = BOOK_STATUSES.reduce(
+      (sum, status) => sum + categorizedBooks[status].length,
+      0
+    );
+
+    return {
+      total,
+      reading: categorizedBooks.reading.length,
+      completed: categorizedBooks.read.length,
+    };
+  }, [categorizedBooks]);
+
+  return (
+    <section className="mx-auto mt-8 max-w-7xl px-4">
+      <div className="overflow-hidden rounded-[2rem] border border-base-300/70 bg-base-100/85 shadow-sm">
+        <div className="grid gap-8 p-6 md:grid-cols-[1.6fr_1fr] md:p-8">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-base-content/55">
+              Personal library
+            </p>
+            <h1 className="mt-3 text-4xl font-semibold tracking-tight md:text-6xl">
+              Reading List
+            </h1>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-base-content/70 md:text-base">
+              List of books I hope you like &lt;3
+            </p>
           </div>
 
-          <div className="h-px bg-base-300 opacity-60" />
-
-          {books.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {books.map((book) => (
-                <BookCard key={book.title} book={book} />
-              ))}
+          <div className="grid gap-3 sm:grid-cols-3 md:grid-cols-1">
+            <div className="rounded-2xl border border-base-300/80 bg-base-200/60 p-4">
+              <p className="text-xs uppercase tracking-[0.24em] text-base-content/50">Total</p>
+              <p className="mt-2 text-3xl font-semibold">{totals.total}</p>
             </div>
-          ) : (
-            <div className="text-center py-10 text-gray-400 italic">
-              No books in this category yet.
+            <div className="rounded-2xl border border-base-300/80 bg-base-200/60 p-4">
+              <p className="text-xs uppercase tracking-[0.24em] text-base-content/50">Reading now</p>
+              <p className="mt-2 text-3xl font-semibold">{totals.reading}</p>
             </div>
-          )}
+            <div className="rounded-2xl border border-base-300/80 bg-base-200/60 p-4">
+              <p className="text-xs uppercase tracking-[0.24em] text-base-content/50">Completed</p>
+              <p className="mt-2 text-3xl font-semibold">{totals.completed}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-        </section>
-      ))}
+function LoadingState() {
+  return (
+    <div className="mx-auto mt-8 max-w-7xl px-4">
+      <div className="rounded-[2rem] border border-base-300/70 bg-base-100/80 p-10 text-center text-base-content/60 shadow-sm">
+        Loading library...
+      </div>
     </div>
   );
 }
@@ -237,13 +452,49 @@ async function fetchMyLibrary(configs: BookISBN[]): Promise<Book[]> {
 }
 
 const ReadingList = ({ config }: { config: Config }) => {
-  const [categorizedBooks, setCategorizedBooks] = useState<Record<string, Book[]>>({
+  const [categorizedBooks, setCategorizedBooks] = useState<CategorizedBooks>({
     read: [],
     reading: [],
     'to-read': [],
     'wont-read': [],
   });
+  const [expandedSections, setExpandedSections] = useState<ExpandedSections>({
+    read: false,
+    reading: false,
+    'to-read': false,
+    'wont-read': false,
+  });
   const [loading, setLoading] = useState(true);
+
+  const focusSection = (status: BookStatus) => {
+    window.history.replaceState(null, "", `#${status}`);
+
+    requestAnimationFrame(() => {
+      const section = document.querySelector<HTMLElement>(
+        `[data-reading-section="${status}"]`
+      );
+
+      section?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
+
+  const toggleSection = (status: BookStatus) => {
+    setExpandedSections((current) => {
+      const next = {
+        read: false,
+        reading: false,
+        "to-read": false,
+        "wont-read": false,
+      };
+
+      next[status] = !current[status];
+      return next;
+    });
+  };
+
+  const selectSection = (status: BookStatus) => {
+    focusSection(status);
+  };
 
   useEffect(() => {
     const loadBooks = async () => {
@@ -253,7 +504,7 @@ const ReadingList = ({ config }: { config: Config }) => {
 
         const books = await fetchMyLibrary(configList);
 
-        const newCategories: Record<string, Book[]> = {
+        const newCategories: CategorizedBooks = {
           read: [],
           reading: [],
           'to-read': [],
@@ -276,9 +527,30 @@ const ReadingList = ({ config }: { config: Config }) => {
     loadBooks();
   }, []);
 
-  if (loading) return <div>Loading library...</div>;
+  useEffect(() => {
+    const activeStatus = BOOK_STATUSES.find((status) => expandedSections[status]);
 
-  const header = "Reading List";
+    if (activeStatus) {
+      focusSection(activeStatus);
+    }
+  }, [expandedSections]);
+
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "") as BookStatus;
+
+    if (BOOK_STATUSES.includes(hash)) {
+      focusSection(hash);
+    }
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={`p-4 lg:p-10 min-h-full ${BG_COLOR}`}>
+        <LoadingState />
+      </div>
+    );
+  }
+
   const sanitizedConfig = getSanitizedConfig(config);
 
   return (
@@ -306,10 +578,8 @@ const ReadingList = ({ config }: { config: Config }) => {
           themeConfig={sanitizedConfig.themeConfig}
         />
       </div>
-      <div className="text-center mt-4">
-        <h1 className="text-5xl lg:text-7xl font-bold mb-10">{header}</h1>
-      </div>
-      {renderBooks(categorizedBooks)}
+      <BooksOverview categorizedBooks={categorizedBooks} />
+      {renderBooks(categorizedBooks, expandedSections, selectSection, toggleSection)}
     </div>
   );
 };
