@@ -116,10 +116,10 @@ const config: UserConfig = {
   educations: [
     {
       institution:
-        "Higher Institute of Scientific Applications and Technology",
+        "Higher Instutue of Applied Mathematics and Informatics (ISSAT) in collaboration with Higher Institute of Scientific Applications and Technology (ISMAI) in Kairouan",
       degree:
         "Masters Degree in Data Science",
-      year: "2024",
+      year: "in progress",
     },
     {
       institution:
