@@ -108,7 +108,7 @@ const config: UserConfig = {
       company: "Rotko Networks",
       position: "Software Developer",
       from: "November 2024",
-      to: "November 2025",
+      to: "October 2025",
       companyLink: "https://rotko.net/",
     },
   ],
