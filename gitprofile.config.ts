@@ -252,6 +252,7 @@ const config: UserConfig = {
     { "ISBN": "9781480402447", "status": "reading", "title": "The Art of Loving" },
 
     { "ISBN": "9780141195377", "status": "to-read", "title": "On the Genealogy of Morals" },
+    { "ISBN": "9780262533379", "status": "to-read", "title": "The Agony of Eros" },
     { "ISBN": "9780199229758", "status": "to-read", "title": "Beauty: A Very Short Introduction" },
     { "ISBN": "9780521779135", "status": "to-read", "title": "Beyond Good and Evil" },
     { "ISBN": "9780571368709", "status": "to-read", "title": "Small Things Like These" },
