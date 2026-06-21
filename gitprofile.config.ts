@@ -244,8 +244,6 @@ const config: UserConfig = {
     { "ISBN": "9781612680019", "status": "read", "title": "Rich Dad Poor Dad", "rating": 3.0 },
     { "ISBN": "9781982150921", "status": "read", "title": "Tender is the flesh", "rating": 2.5 },
     { "ISBN": "9781787333826", "status": "read", "title": "Lapvona", "rating": 3.0 },
-    { "ISBN": "9780521636452", "status": "read", "title": "The Gay science", "rating": 4.0 },
-    { "ISBN": "9780262533379", "status": "to-read", "title": "The Agony of Eros", "rating": 4.5  },
 
     { "ISBN": "9780525512196", "status": "reading", "title": "21 Lessons for the 21st Cetury" },
     { "ISBN": "9781614274865", "status": "reading", "title": "The problems of philosophy" },
