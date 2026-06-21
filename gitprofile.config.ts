@@ -222,7 +222,7 @@ const config: UserConfig = {
     // title field is optional
     { "ISBN": "9780374533557", "status": "read", "title": "Thinking, Fast and Slow", "rating": 5.0 },
     { "ISBN": "9780521636452", "status": "read", "title": "The Gay science", "rating": 4.0 },
-    { "ISBN": "9780262533379", "status": "to-read", "title": "The Agony of Eros", "rating": 4.5  },
+    { "ISBN": "9780262533379", "status": "read", "title": "The Agony of Eros", "rating": 4.5  },
     { "ISBN": "9780061353239", "status": "read", "title": "Predictably Irrational", "rating": 4.0 },
     { "ISBN": "9780812993882", "status": "read", "title": "How We Learn The Surprising Truth About ...", "rating": 3.5 },
     { "ISBN": "9780811204811", "status": "read", "title": "No Longer Human", "rating": 4.0 },
