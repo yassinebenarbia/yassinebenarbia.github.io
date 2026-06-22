@@ -9,11 +9,17 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 /// Fetches books using ISBN number derived from config and appends config rating
 const CACHE_PREFIX = "book_";
 const CACHE_VERSION = "v1";
-const CACHE_TTL = 1000 * 60 * 60 * 24 * 30; // 30 days
+
+async function generateLibraryHash(configs: BookISBN[]): Promise<string> {
+  const msgBuffer = new TextEncoder().encode(JSON.stringify(configs.map(c => c.ISBN)));
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
 type CachedBook = {
   version: string;
-  timestamp: number;
+  hash: string;
   data: any;
 };
 
@@ -393,7 +399,7 @@ async function createBookInstances(
   return Promise.all(bookPromises);
 }
 
-async function fetchMyLibrary(configs: BookISBN[]): Promise<Book[]> {
+async function fetchMyLibrary(configs: BookISBN[], libraryHash: string): Promise<Book[]> {
   const cachedData: Record<string, any> = {};
   const missingCache: BookISBN[] = [];
 
@@ -405,10 +411,10 @@ async function fetchMyLibrary(configs: BookISBN[]): Promise<Book[]> {
       try {
         const parsed: CachedBook = JSON.parse(raw);
 
-        const isExpired = Date.now() - parsed.timestamp > CACHE_TTL;
+        const isWrongHash = parsed.hash !== libraryHash;
         const isWrongVersion = parsed.version !== CACHE_VERSION;
 
-        if (!isExpired && !isWrongVersion) {
+        if (!isWrongHash && !isWrongVersion) {
           cachedData[`ISBN:${cfg.ISBN}`] = parsed.data;
           continue;
         }
@@ -435,7 +441,7 @@ async function fetchMyLibrary(configs: BookISBN[]): Promise<Book[]> {
         const isbn = key.replace("ISBN:", "");
         const cacheEntry: CachedBook = {
           version: CACHE_VERSION,
-          timestamp: Date.now(),
+          hash: libraryHash,
           data: val,
         };
 
@@ -511,7 +517,8 @@ const ReadingList = ({ config }: { config: Config }) => {
         const typedConfig = config as { books?: BookISBN[] };
         const configList = typedConfig.books || [];
 
-        const books = await fetchMyLibrary(configList);
+        const libraryHash = await generateLibraryHash(configList);
+        const books = await fetchMyLibrary(configList, libraryHash);
 
         const newCategories: CategorizedBooks = {
           read: [],
