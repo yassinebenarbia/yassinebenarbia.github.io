@@ -223,6 +223,7 @@ const config: UserConfig = {
     { "ISBN": "9780374533557", "status": "read", "title": "Thinking, Fast and Slow", "rating": 5.0 },
     { "ISBN": "9780521636452", "status": "read", "title": "The Gay science", "rating": 4.0 },
     { "ISBN": "9780262533379", "status": "read", "title": "The Agony of Eros", "rating": 4.5  },
+    { "ISBN": "9780804795098", "status": "read", "title": "The Burnout Society", "rating": 4.5 },
     { "ISBN": "9780061353239", "status": "read", "title": "Predictably Irrational", "rating": 4.0 },
     { "ISBN": "9780812993882", "status": "read", "title": "How We Learn The Surprising Truth About ...", "rating": 3.5 },
     { "ISBN": "9780811204811", "status": "read", "title": "No Longer Human", "rating": 4.0 },
@@ -251,7 +252,6 @@ const config: UserConfig = {
     { "ISBN": "9781250118035", "status": "reading", "title": "The Lonely City Adventures in the Art of Being Alone" },
     { "ISBN": "9781250237231", "status": "reading", "title": "Permanent Record" },
     { "ISBN": "9781480402447", "status": "reading", "title": "The Art of Loving" },
-    { "ISBN": "9780804795098", "status": "reading", "title": "The Burnout Society" },
 
     { "ISBN": "9780141195377", "status": "to-read", "title": "On the Genealogy of Morals" },
     { "ISBN": "9780199229758", "status": "to-read", "title": "Beauty: A Very Short Introduction" },
