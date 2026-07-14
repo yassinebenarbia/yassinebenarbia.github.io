@@ -494,21 +494,28 @@ const ReadingList = ({ config }: { config: Config }) => {
 
   const toggleSection = (status: BookStatus) => {
     setExpandedSections((current) => {
-      const next = {
+      const willExpand = !current[status];
+
+      const next: ExpandedSections = {
         read: false,
         reading: false,
         "to-read": false,
         "wont-read": false,
       };
 
-      next[status] = !current[status];
+      if (willExpand) {
+        next[status] = true;
+        navigate(`/books/${status}`);
+      } else {
+        navigate("/books");
+      }
+
       return next;
     });
   };
 
   const selectSection = (status: BookStatus) => {
     navigate(`/books/${status}`);
-    focusSection(status);
   };
 
   useEffect(() => {
@@ -552,10 +559,25 @@ const ReadingList = ({ config }: { config: Config }) => {
   }, [expandedSections]);
 
   useEffect(() => {
-    if (activeStatus) {
-      focusSection(activeStatus);
+    if (loading) return;
+
+    if (!activeStatus) {
+      setExpandedSections({
+        read: false,
+        reading: false,
+        "to-read": false,
+        "wont-read": false,
+      });
+      return;
     }
-  }, [activeStatus]);
+
+    setExpandedSections({
+      read: activeStatus === "read",
+      reading: activeStatus === "reading",
+      "to-read": activeStatus === "to-read",
+      "wont-read": activeStatus === "wont-read",
+    });
+  }, [loading, activeStatus]);
 
   if (loading) {
     return (
