@@ -72,7 +72,7 @@ interface BookCover {
 type CategorizedBooks = Record<BookStatus, Book[]>;
 type ExpandedSections = Record<BookStatus, boolean>;
 
-const BOOK_STATUSES: BookStatus[] = ["reading", "to-read", "read", "wont-read"];
+const BOOK_STATUSES: BookStatus[] = ["reading", "read", "to-read", "wont-read"];
 const PREVIEW_BOOK_COUNT = 3;
 
 function isBookStatus(value: string | undefined): value is BookStatus {
