@@ -231,6 +231,7 @@ const config: UserConfig = {
     { "ISBN": "9780811204811", "status": "read", "title": "No Longer Human", "rating": 4.0 },
     { "ISBN": "9781840228021", "status": "read", "title": "1984", "rating": 4.5 },
     { "ISBN": "9781519099846", "status": "read", "title": "Thinking as a Science", "rating": 4.5 },
+    { "ISBN": "9780199229758", "status": "read", "title": "Beauty: A Very Short Introduction", "rating": 4.3 },
     { "ISBN": "9781451683400", "status": "read", "title": "Free Will", "rating": 4.5 },
     { "ISBN": "9781250118363", "status": "read", "title": "Algorithms to live by", "rating": 5.0 },
     { "ISBN": "9780151072552", "status": "read", "title": "Animal Farm", "rating": 4.3 },
