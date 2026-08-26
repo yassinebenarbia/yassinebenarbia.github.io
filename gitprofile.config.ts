@@ -247,8 +247,8 @@ const config: UserConfig = {
     { "ISBN": "9781612680019", "status": "read", "title": "Rich Dad Poor Dad", "rating": 3.0 },
     { "ISBN": "9781982150921", "status": "read", "title": "Tender is the flesh", "rating": 2.5 },
     { "ISBN": "9781787333826", "status": "read", "title": "Lapvona", "rating": 3.0 },
-
-    { "ISBN": "9780199229758", "status": "reading", "title": "Beauty: A Very Short Introduction" },
+    
+    { "ISBN": "9780525564454", "status": "reading", "title": "The Myth of Sisyphus" },
     { "ISBN": "9780807014172", "status": "reading", "title": "One-Dimensional Man Studies in the Ideology of Advanced Industrial Society" },
     { "ISBN": "9780525512196", "status": "reading", "title": "21 Lessons for the 21st Cetury" },
     { "ISBN": "9781595141880", "status": "reading", "title": "13 Reasons Why" },
