@@ -248,7 +248,7 @@ const config: UserConfig = {
     { "ISBN": "9781982150921", "status": "read", "title": "Tender is the flesh", "rating": 2.5 },
     { "ISBN": "9781787333826", "status": "read", "title": "Lapvona", "rating": 3.0 },
     
-    { "ISBN": "9780525564454", "status": "reading", "title": "The Myth of Sisyphus" },
+    { "ISBN": "9780984480272", "status": "reading", "title": "The Conspiracy Against the Human Race A Contrivance of Horror" },
     { "ISBN": "9780807014172", "status": "reading", "title": "One-Dimensional Man Studies in the Ideology of Advanced Industrial Society" },
     { "ISBN": "9780525512196", "status": "reading", "title": "21 Lessons for the 21st Cetury" },
     { "ISBN": "9781595141880", "status": "reading", "title": "13 Reasons Why" },
@@ -256,7 +256,6 @@ const config: UserConfig = {
     { "ISBN": "9781250237231", "status": "reading", "title": "Permanent Record" },
 
     { "ISBN": "9780141195377", "status": "to-read", "title": "On the Genealogy of Morals" },
-    { "ISBN": "9780984480272", "status": "to-read", "title": "The Conspiracy Against the Human Race A Contrivance of Horror" },
     { "ISBN": "9780521779135", "status": "to-read", "title": "Beyond Good and Evil" },
     { "ISBN": "9781250118035", "status": "to-read", "title": "The Lonely City Adventures in the Art of Being Alone" },
     { "ISBN": "9780141439556", "status": "to-read", "title": "Wuthering Heights" },
